@@ -1,0 +1,19 @@
+    .line{
+        display: inline-block;
+        margin: 20px;
+        width: 80px;
+        height: 3px;
+        background-color: black;
+    }
+    .nav{
+        color: black !important;
+    }
+
+@media screen and (max-width: 480px) {
+    
+        .line{
+            margin: 10px;
+            width: 50px;
+        }
+   
+}

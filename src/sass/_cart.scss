@@ -1,0 +1,25 @@
+.cart {
+    .nav {
+        background-color: $color-secondary;
+
+        .menue {
+            margin-top: 4.8rem;
+            align-items: center;
+            padding: 20px 0px;
+
+            p {
+                margin: 0;
+            }
+
+        }
+    }
+
+    img {
+        width: 50px;
+        height: 70px;
+    }
+    .checkoutCart{
+        box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+    }
+
+}
