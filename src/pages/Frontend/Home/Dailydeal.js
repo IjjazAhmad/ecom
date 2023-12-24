@@ -65,8 +65,8 @@ let filterpro =  allProduct.filter((product)=>{
                                                     <div className="product-bottom-details">
                                                         <div className="product-price"><small>${product.price}</small>${product.dscPrice}</div>
                                                         <div className="product-links">
-                                                            <Link to={product.uid} ><i className="fa-solid fa-eye"></i></Link>
-                                                            <a href=""><i className="fa fa-heart"></i></a>
+                                                            <Link to={`/detail/${product.uid}`} ><i className="fa-solid fa-eye"></i></Link>
+                                                            <Link ><i className="fa fa-heart"></i></Link>
                                                             <Link to={product.uid}><i className="fa fa-shopping-cart"></i></Link>
                                                         </div>
                                                     </div>

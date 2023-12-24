@@ -1,15 +1,12 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { message } from 'antd'
-import { auth } from '../../config/firebase'
-import { signOut } from 'firebase/auth'
+import { Link } from 'react-router-dom'
 import { useAuthContext } from '../../pages/Contaxt/AuthContaxt'
 import { UserOutlined, HeartOutlined, ShoppingCartOutlined, CloseOutlined, MenuOutlined } from '@ant-design/icons';
 import { Avatar, Badge } from 'antd';
 export default function Navbar() {
-  const navegate = useNavigate();
+  
   const [navbar, setNavbar] = useState(false)
-  const { isAuth, dispatch, user } = useAuthContext()
+  const { isAuth, user } = useAuthContext()
 
   const changebg = () => {
     if (window.scrollY >= 100) {
@@ -21,18 +18,6 @@ export default function Navbar() {
   window.addEventListener("scroll", changebg);
 
 
-
-  const handleLogout = () => {
-    signOut(auth)
-      .then(() => {
-        navegate("/")
-        message.success("Signout successful")
-        dispatch({ type: "SET_LOGGED_OUT" })
-      })
-      .catch(err => {
-        message.error("Signout not successful")
-      })
-  }
   return (
     <div className='header'>
       <div className="row">
@@ -56,7 +41,7 @@ export default function Navbar() {
                         <Link to="/shop" className="nav-link"  >Shop</Link>
                       </li>
                       <li className="nav-item">
-                        <Link to="/dailydeal" className="nav-link"  >Blog</Link>
+                        <Link to="/blog" className="nav-link"  >Blog</Link>
                       </li>
                       <li className="nav-item">
                         <Link to="/about" className="nav-link" >About</Link>
@@ -99,7 +84,7 @@ export default function Navbar() {
                     </div>
                   }
                   <Badge count={1} className='me-2' >
-                    <Link to='/' className="nav-link fs-4 text-warning"><HeartOutlined /></Link>
+                    <Link to='/heart' className="nav-link fs-4 text-warning"><HeartOutlined /></Link>
                   </Badge>
                   <Badge count={1}  >
                     <Link to='/cart' className="nav-link  fs-4 text-warning" ><ShoppingCartOutlined /></Link>

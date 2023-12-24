@@ -7,6 +7,7 @@ import Profile from './Profile'
 import PrivateRoute from '../components/PrivateRoutes'
 import { ToastContainer } from 'react-toastify'
 import { useAuthContext } from './Contaxt/AuthContaxt'
+import ProductDetail from './Frontend/ProductDetail'
 export default function Index() {
   const {user} =useAuthContext()
   return (
@@ -14,6 +15,7 @@ export default function Index() {
      
         <Routes>
           <Route path='/*' element={<Frontend/>} />
+          <Route path='/detail/:productId' element={<ProductDetail />} />
           <Route path='/auth/*' element={<Authentication/>} />
           {
             user.role === "admin" ?

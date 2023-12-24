@@ -1,6 +1,6 @@
 import React from 'react'
 import 'mdb-ui-kit/css/mdb.min.css';
-import { Link, Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useAuthContext } from '../Contaxt/AuthContaxt';
 import { signOut } from 'firebase/auth';
 import { message } from 'antd';
@@ -11,8 +11,8 @@ export default function Profile() {
     signOut(auth)
     .then(() => {
         message.success("Signout successful");
-        dispatch({ type: "SET_LOGGED_OUT" });
-        <Navigate to="/"  />
+        dispatch({ type: "LOGOUT" });
+        
       })
       .catch(err => {
         message.error("Signout not successful")

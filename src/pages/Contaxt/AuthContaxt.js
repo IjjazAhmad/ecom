@@ -10,7 +10,7 @@ const reducer = (state, { type, payload }) => {
     case "LOGIN":
       return {isAuth: true, user: payload.user }
     case "LOGOUT":
-      return initialState
+      return {isAuth: false, user: {} }
     default:
       return state
   }

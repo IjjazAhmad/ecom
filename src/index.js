@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import './config/global';
 import ProductContextProvider from './pages/Contaxt/ProductContext';
 import AuthContextProvider from './pages/Contaxt/AuthContaxt';
+import CartProductContextProvider from './pages/Contaxt/CartProductContaxt';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -16,7 +17,9 @@ root.render(
     <BrowserRouter>
       <AuthContextProvider>
         <ProductContextProvider>
-          <App />
+          <CartProductContextProvider>
+            <App />
+          </CartProductContextProvider>
         </ProductContextProvider>
       </AuthContextProvider>
     </BrowserRouter>

@@ -5,34 +5,9 @@ import { fireStore } from '../../config/firebase'
 
 const ProductContext = createContext()
 
-const initialstate = {
-  sorting_value: "lowest"
-
-}
-const reducer = (state, action) => {
-  switch (action) {
-    case "GET_SORT_VALUE":
-
-      let userSortValue = document.getElementById("sort");
-      let sort_value = userSortValue.options[userSortValue.selectedIndex].value;
-      console.log("🚀 ~ file: ProductContext.js:10 ~ reducer ~ sort_value:", sort_value)
-
-
-
-      return {
-        ...state,
-        sorting_value: sort_value
-      }
-
-    default:
-      return state;
-  }
-
-}
 
 
 export default function ProductContextProvider(props) {
-  const [state, dispatch] = useReducer(reducer, initialstate)
   const [documents, setDocuments] = useState([])
   const [allProduct, setAllProduct] = useState([])
   const [isApploading, setisApploading] = useState(true)
@@ -54,16 +29,14 @@ export default function ProductContextProvider(props) {
     setDocuments(array)
   }
 
-  const sorting = () => {
-    dispatch({ type: "GET_SORT_VALUE" })
-  }
+
   
   useEffect(() => {
     setAllProduct(documents)
   }, [documents])
   
   return (
-    <ProductContext.Provider value={{ ...state, allProduct, sorting, setAllProduct }}>
+    <ProductContext.Provider value={{ allProduct, setAllProduct }}>
       {props.children}
     </ProductContext.Provider>
   )

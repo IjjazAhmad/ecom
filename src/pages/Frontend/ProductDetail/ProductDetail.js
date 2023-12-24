@@ -4,6 +4,7 @@ import { images } from '../../../assets/heroSection';
 import { Link, useParams } from 'react-router-dom';
 import { Image } from 'antd';
 import { UesProductContext } from '../../Contaxt/ProductContext';
+import SecNav from '../../../components/Header/SecNav';
 export default function ProductDetail() {
     const { productId } = useParams();
     const { allProduct } = UesProductContext()
@@ -62,6 +63,7 @@ export default function ProductDetail() {
     // }, [])
     return (
         <>
+        <SecNav name ="PRODUCT DETAILS" />
             <div className="productdetail pb-4">
 
 
@@ -175,14 +177,14 @@ export default function ProductDetail() {
                                             </div>
                                             <div className="product-details">
                                                 <span className="product-catagory">{product.brand}</span>
-                                                <h4><a href="">{product.productName}</a></h4>
+                                                <h4><Link href="">{product.productName}</Link></h4>
                                                 <p>{product.oneLineDetail}</p>
                                                 <div className="product-bottom-details">
                                                     <div className="product-price"><small>${product.price}</small>${product.dscPrice}</div>
                                                     <div className="product-links">
-                                                        <a href={product.uid}><i className="fa-solid fa-eye"></i></a>
-                                                        <a href=""><i className="fa fa-heart"></i></a>
-                                                        <a href=""><i className="fa fa-shopping-cart"></i></a>
+                                                        <Link to={`/detail/${product.uid}`}><i className="fa-solid fa-eye"></i></Link>
+                                                        <Link href=""><i className="fa fa-heart"></i></Link>
+                                                        <Link href=""><i className="fa fa-shopping-cart"></i></Link>
                                                     </div>
                                                 </div>
                                             </div>

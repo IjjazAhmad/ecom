@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { images } from '../../../assets/heroSection'
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { UesCartProductContext } from '../../Contaxt/CartProductContaxt';
+import SecNav from '../../../components/Header/SecNav';
 export default function Cart() {
-    const{cartProductId}  = useParams()
-    console.log("🚀 ~ file: Cart.js:6 ~ Cart ~ cartProductId:", cartProductId)
+   const {name} = UesCartProductContext()
     
     let [num, setNum] = useState(0);
     let incNum = () => {
@@ -21,17 +22,7 @@ export default function Cart() {
     }
     return (
         <div className="cart">
-            <div className="nav">
-                <div className="menue  bg-body-tertiary w-100">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col ">
-                                <p className='fs-4 text-center'>HOME / CART</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <SecNav name ="CART" />
             <div className="container">
                 <div className="row my-3">
                     <div className="col">

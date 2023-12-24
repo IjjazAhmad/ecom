@@ -3,84 +3,94 @@ import ProductCard from '../../../components/Card/ProductCard'
 import { Input, Select } from 'antd';
 import { UesProductContext } from '../../Contaxt/ProductContext';
 import { Link } from 'react-router-dom';
+import SecNav from '../../../components/Header/SecNav';
 const { Search } = Input;
 
 
 export default function Shope() {
-  const { allProduct, sorting, dispatch } = UesProductContext()
-
-  const [fiterproduct, setfiterproduct] = useState(allProduct)
-
-
-
-  const handleCategory = (product) => {
-
-    const newproduct = allProduct.filter((x) => {
-      return x.categories === product
-    })
-    console.log("🚀 ~ file: Shop.js:21 ~ //newproduct ~ llproducts:", newproduct)
-    setfiterproduct(newproduct)
-
-
+  const { allProduct, dispatch } = UesProductContext()
+  const [filterProduct, setFilterProduct] = useState(allProduct);
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedSize, setSelectedSize] = useState('all');
+  const [sortOrder, setSortOrder] = useState('lowest');
+  const handleCategory = (category) => {
+    setSelectedCategory(category);
+    updateFilterProducts(category, selectedSize);
   };
-  const handleCategoryall = () => {
 
-
-    setfiterproduct(allProduct)
-
-
+  const handleSize = (size) => {
+    setSelectedSize(size);
+    updateFilterProducts(selectedCategory, size);
   };
-  const handleSizeall = () => {
 
+  const updateFilterProducts = (category, size) => {
+    let newProducts = allProduct;
 
-    setfiterproduct(allProduct)
+    if (category !== 'all') {
+      newProducts = newProducts.filter((x) => x.categories === category);
+    }
 
+    if (size !== 'all') {
+      newProducts = newProducts.filter((x) => x.size === size);
+    }
 
+    setFilterProduct(newProducts);
   };
 
 
-
-  const handleSize = (Product) => {
-    const newproduct = allProduct.filter((x) => {
-      return x.size === Product
-    })
-    console.log("🚀 ~ file: Shop.js:21 ~ //newproduct ~ llproducts:", newproduct)
-    setfiterproduct(newproduct)
-
+  const onSearch = (searchValue) => {
+    const filteredProducts = allProduct.filter((product) =>
+      product.productName.toLowerCase().includes(searchValue.toLowerCase()) || product.oneLineDetail.toLowerCase().includes(searchValue.toLowerCase()) || product.brand.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    setFilterProduct(filteredProducts);
   };
 
-  const handleChange = () => {
-    dispatch({ type: "highest" })
+  const sortProducts = (order, products) => {
+    const sortedProducts = [...products];
+    sortedProducts.sort((a, b) => {
+      const priceA = parseFloat(a.price);
+      const priceB = parseFloat(b.price);
+
+      if (order === 'lowest') {
+        return priceA - priceB;
+      } else if (order === 'highest') {
+        return priceB - priceA;
+      }
+      return 0;
+    });
+
+    setFilterProduct(sortedProducts);
   };
-  const onSearch = (e) => console.log(e.target.value);
-
-
+  const handleChange = (e) => {
+    const order = e.target.value;
+    setSortOrder(order);
+    // Sort the products based on the selected order
+    sortProducts(order, filterProduct);
+  };
   return (
     <div className="shop">
-      <div className="nav">
-        <div className="menue  bg-body-tertiary w-100">
-          <div className="container">
-            <div className="row">
-              <div className="col ">
-                <p className='fs-4 text-center'>HOME / SHOP</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <SecNav name ="SHOP" />
 
       <div className="container mt-5">
         <div className="searchManu">
           <div className="row">
             <div className="col-12 col-md-4 col-lg-3 mb-3 ">
-              <Search status='warning' placeholder="search product" onChange={onSearch} allowClear className='searchbar' />
+
+              <Search
+                status="warning"
+                placeholder="Search product"
+                onChange={(e) => onSearch(e.target.value)}
+                allowClear
+                className='searchbar'
+              />
             </div>
-            <div className="col-12 col-md-8 col-lg-9">
-              <select id='sort' onClick={handleChange} className='me-3 mb-3 form-select w-25'>
+            <div className="col-12 col-md-4 col-lg-3">
+             
+              <select id='sort' onChange={handleChange} className='me-3 mb-3 form-select w-100'>
                 <option value="lowest">Lowest To Highest</option>
                 <option value="highest">Highest To Lowest</option>
               </select>
-              <span className=''>Showing 8 of 144 result</span>
+              <span className=''>Showing {filterProduct.length} of {allProduct.length} results</span>
             </div>
           </div>
         </div>
@@ -91,7 +101,7 @@ export default function Shope() {
                 <div className="col-6 col-md-12 col-lg-12">
                   <div className="Categories">
                     <p className='fs-5 fw-bold mt-5'>Categories</p>
-                    <input type="radio" onClick={() => { handleCategoryall("all") }} value={"all"} name="allCate" id="all1" className=' me-2 my-2 p-3' />
+                    <input type="radio" onClick={() => { handleCategory("all") }} value={"all"} name="allCate" id="all1" className=' me-2 my-2 p-3' />
                     <label htmlFor="all1">All Categories</label> <br />
 
                     <input type="radio" onClick={() => { handleCategory("men") }} value={"men"} name="allCate" id="men" className=' me-2 my-2 p-3' />
@@ -124,7 +134,7 @@ export default function Shope() {
                 <div className="col-6 col-md-12 col-lg-12">
                   <div className="Size">
                     <p className='fs-5 fw-bold mt-5'>Size</p>
-                    <input type="radio" onClick={() => { handleSizeall("all") }} name="allSize" id="all" className=' me-2 my-2 p-3' />
+                    <input type="radio" onClick={() => { handleSize("all") }} name="allSize" id="all" className=' me-2 my-2 p-3' />
                     <label htmlFor="all">All Sizes</label> <br />
                     <input type="radio" onClick={() => { handleSize("sm") }} name="allSize" id="sm" className=' me-2 my-2 p-3' />
                     <label htmlFor="sm">SM </label> <br />
@@ -149,10 +159,10 @@ export default function Shope() {
             <div className="searchResult ">
               <div className="row">
                 {
-                  fiterproduct.map((product, i) => {
+                  filterProduct.map((product, i) => {
                     if (i < 9) {
                       return (
-                        <div className="col-6 col-md-6 col-lg-4 " key={i}>
+                        <div className="col-6 col-md-6 col-lg-4 " key={product.id}>
                           <div className="product-card">
                             {product.offer ?
 
@@ -166,13 +176,13 @@ export default function Shope() {
                             </div>
                             <div className="product-details">
                               <span className="product-catagory">{product.brand}</span>
-                              <h4><a href="">{product.productName}</a></h4>
+                              <h4><Link to={`/detail/${product.uid}`}>{product.productName}</Link></h4>
                               <p>{product.oneLineDetail}</p>
                               <div className="product-bottom-details">
                                 <div className="product-price"><small>${product.price}</small>${product.dscPrice}</div>
                                 <div className="product-links">
-                                  <Link to={product.uid}><i className="fa-solid fa-eye"></i></Link>
-                                  <a href=""><i className="fa fa-heart"></i></a>
+                                  <Link to={`/detail/${product.uid}`}><i className="fa-solid fa-eye"></i></Link>
+                                  <Link ><i className="fa fa-heart"></i></Link>
                                   <Link to={product.uid}><i className="fa fa-shopping-cart"></i></Link>
                                 </div>
                               </div>

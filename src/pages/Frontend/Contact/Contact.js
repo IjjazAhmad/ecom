@@ -2,23 +2,14 @@ import React from 'react'
 import GoogleMap from './GoogleMap'
 import { Link } from 'react-router-dom'
 import { Button, Input } from 'antd'
+import SecNav from '../../../components/Header/SecNav'
 const { TextArea } = Input
 
 export default function Contact() {
   return (
     <>
       <div className="contact">
-        <div className="nav">
-          <div className="menue  bg-body-tertiary w-100">
-            <div className="container">
-              <div className="row">
-                <div className="col ">
-                  <p className='fs-4 text-center'>HOME / CONTACT</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <SecNav name ="CONTACT" />
         <div className="container">
           <div className="row">
             <div className="col">

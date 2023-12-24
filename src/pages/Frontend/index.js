@@ -3,10 +3,13 @@ import { Route, Routes } from 'react-router-dom'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import Home from './Home'
-import ProductDetail from './ProductDetail'
+
 import Contact from './Contact'
-import Shop from './Shop/Shop'
+import Shop from './Shop/'
+import About from './About'
 import Cart from './Cart'
+import Blog from './Blog'
+import Heart from './Heart'
 export default function index() {
   return (
     <>
@@ -14,10 +17,13 @@ export default function index() {
       <main>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/shop/:productId' element={<ProductDetail />} />
+          
           <Route path='/shop' element={<Shop/>} />
+          <Route path='/blog' element={<Blog/>} />
+          <Route path='/about' element={<About/>} />
           <Route path='/contact' element={<Contact />} />
-          <Route path='/cart/:cartProductId' element={<Cart />} />
+          <Route path='/heart' element={<Heart />} />
+          <Route path='/cart' element={<Cart />} />
         </Routes>
       </main>
       <Footer/>
