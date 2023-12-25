@@ -1,14 +1,20 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import ProductCard from '../../../components/Card/ProductCard'
 import { Input, Select } from 'antd';
 import { UesProductContext } from '../../Contaxt/ProductContext';
 import { Link } from 'react-router-dom';
 import SecNav from '../../../components/Header/SecNav';
+import { UesCartProductContext } from '../../Contaxt/CartProductContaxt';
 const { Search } = Input;
 
 
 export default function Shope() {
   const { allProduct, dispatch } = UesProductContext()
+  const { quantity, cartProduct, cartdispatch } = UesCartProductContext()
+
+
+
+  // ============================== filtering
   const [filterProduct, setFilterProduct] = useState(allProduct);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedSize, setSelectedSize] = useState('all');
@@ -36,7 +42,6 @@ export default function Shope() {
 
     setFilterProduct(newProducts);
   };
-
 
   const onSearch = (searchValue) => {
     const filteredProducts = allProduct.filter((product) =>
@@ -67,9 +72,23 @@ export default function Shope() {
     // Sort the products based on the selected order
     sortProducts(order, filterProduct);
   };
+
+  // -------------------------------- filtering end
+
+  const handleAddToCart = (product) => {
+
+    let CartQty = 3
+    product.CartQty = CartQty
+    cartdispatch({ type: "AddProductToCart", payload: {product} })
+    window.notify("Product Add To Cart Successfuly!", "success")
+
+    console.log(cartProduct)
+
+  }
+
   return (
     <div className="shop">
-      <SecNav name ="SHOP" />
+      <SecNav name="SHOP" />
 
       <div className="container mt-5">
         <div className="searchManu">
@@ -85,7 +104,7 @@ export default function Shope() {
               />
             </div>
             <div className="col-12 col-md-4 col-lg-3">
-             
+
               <select id='sort' onChange={handleChange} className='me-3 mb-3 form-select w-100'>
                 <option value="lowest">Lowest To Highest</option>
                 <option value="highest">Highest To Lowest</option>
@@ -183,7 +202,7 @@ export default function Shope() {
                                 <div className="product-links">
                                   <Link to={`/detail/${product.uid}`}><i className="fa-solid fa-eye"></i></Link>
                                   <Link ><i className="fa fa-heart"></i></Link>
-                                  <Link to={product.uid}><i className="fa fa-shopping-cart"></i></Link>
+                                  <Link onClick={() => handleAddToCart(product)}><i className="fa fa-shopping-cart"></i></Link>
                                 </div>
                               </div>
                             </div>
